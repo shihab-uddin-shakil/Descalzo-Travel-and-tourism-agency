@@ -59,8 +59,8 @@
                 <li class="xn-openable">
                     <a href="#"><span class="fa fa-users"></span> <span class="xn-text">Employees</span></a>
                     <ul>
-                        <li><a href="{{ route('EUserList') }}"><span class="fa fa-user"></span>User</a></li>
-                        <li><a href="{{ route('EGrpList') }}"><span class="fa fa-users"></span>Group</a></li>
+                        <li><a href="{{ url('employee') }}"><span class="fa fa-user"></span>User</a></li>
+                        <li><a href="{{ url('employee_categories') }}"><span class="fa fa-users"></span>Group</a></li>
 
                     </ul>
                 </li>
@@ -188,6 +188,11 @@
             <!-- END BREADCRUMB -->
 
             <!-- PAGE CONTENT WRAPPER -->
+            @if (session('message'))
+                <div class="alert alert-primary" role="alert">
+                    {{ session('message') }}
+                </div>
+            @endif
             @yield('content')
 
             <!-- END PAGE CONTENT WRAPPER -->

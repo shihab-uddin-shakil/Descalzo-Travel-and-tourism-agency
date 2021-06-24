@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\Employee_Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
-class EmployeeController extends Controller
+class EmployeeCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $this->data['employees']=Employee::all();
-        return view('EmployeeUser.UserList',$this->data);
+        $this->data['ecategories']=Employee_Category::all();
+        return view('EmployeeGroup.group',$this->data);
     }
 
     /**
@@ -25,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('EmployeeGroup.create');
     }
 
     /**
@@ -36,7 +37,15 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $titleData=$request->all();
+        if (  Employee_Category::create($titleData)) {
+           Session::flash('message',"Emloyee Category Created Successfully..");
+        }
+        else {
+            Session::flash('message',"Emloyee Category   not Created .");
+
+        }
+        return redirect()->to('employee_categories');
     }
 
     /**
@@ -81,6 +90,13 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Employee_Category::find($id)->delete()) {
+            Session::flash('message',"Emloyee Category  Deleted Successfully..");
+         }
+         else {
+             Session::flash('message',"Emloyee Category  not Deleted .");
+         }
+
+         return redirect()->to('employee_categories');
     }
 }

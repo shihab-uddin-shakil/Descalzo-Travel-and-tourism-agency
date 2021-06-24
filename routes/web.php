@@ -24,7 +24,11 @@ Route::group(['middleware' => 'auth'], function() {
         return view('main.dashboard');
     });
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-    Route::get('/EmployeeList','EmployeeController@index');
+    Route::get('/employee_categories','EmployeeCategoryController@index' );
+    Route::get('/employee_categories/create','EmployeeCategoryController@create' );
+    Route::post('/employee_categories/create','EmployeeCategoryController@store' );
+    Route::delete('/employee_categories/{id}','EmployeeCategoryController@destroy' );
+    Route::resource('/employee','EmployeeController',['except'=>['show']]);
     Route::get('/compose','MailBoxController@compose' )->name('compose');
     Route::get('/inbox','MailBoxController@inbox' )->name('inbox');
     Route::get('/Mail/Message','MailBoxController@message' )->name('message');
@@ -32,7 +36,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/Calender','TemporalController@calender' )->name('calender');
     Route::get('/EUserList','TemporalController@EUserList' )->name('EUserList');
     Route::get('/Employee/Create','TemporalController@EUseeCreate' )->name('EUseeCreate');
-    Route::get('/Employee_gorup','TemporalController@EGrpList' )->name('EGrpList');
     Route::get('/Employee/Group_Create','TemporalController@EGrpCreate' )->name('EGrpCreate');
     Route::get('/Tourist','TemporalController@tourist' )->name('tourist');
     Route::get('/Tourist/Transaction','TemporalController@touristTransaction' )->name('touristTransaction');
