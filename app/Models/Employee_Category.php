@@ -15,9 +15,9 @@ class Employee_Category extends Model
     }
     public static function categoryArray(){
         $arr=[];
-        $groups=Employee_Category::all();
-        foreach($groups as $group){
-            $arr[$group->id]=$group->title;
+        $categorys=Employee_Category::all();
+        foreach($categorys as $category){
+            $arr[$category->id]=$category->title;
         }
         return $arr;
     }

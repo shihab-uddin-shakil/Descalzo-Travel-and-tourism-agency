@@ -23,7 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Category Name</th>
+                                    <th>Employee Category </th>
                                     <th>Name</th>
                                     <th>User Name</th>
                                     <th>Email</th>
@@ -44,17 +44,20 @@
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->email }}</td>
+                                        {{-- <td>{{ $user->email }}</td> --}}
                                         <td>{{ $user->address }}</td>
                                         <td>{{ $user->account }}</td>
                                         <td>{{ $user->salary }}</td>
 
                                         <td>
-                                            <form method="POST">
+                                            <form method="POST"
+                                                action="{{ url('employee/destroy', ['user' => $user->id]) }}">
 
-                                                <a class="btn btn btn-primary"> <i class="fa fa-edit"></i> </a>
+                                                <a class=" btn btn btn-primary"
+                                                    href="{{ url('employee/edit', ['user' => $user->id]) }}"> <i
+                                                        class="fa fa-edit"></i> </a>
                                                 @csrf
-
+                                                @method('DELETE')
                                                 <button onclick="return confirm('Are You Sure Want to delete?')"
                                                     type="submit" class=" btn btn-danger"><i class="fa fa-trash-o"
                                                         aria-hidden="true"></i></button>

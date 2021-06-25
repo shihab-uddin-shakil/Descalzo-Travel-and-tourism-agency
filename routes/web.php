@@ -28,7 +28,17 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/employee_categories/create','EmployeeCategoryController@create' );
     Route::post('/employee_categories/create','EmployeeCategoryController@store' );
     Route::delete('/employee_categories/{id}','EmployeeCategoryController@destroy' );
-    Route::resource('/employee','EmployeeController',['except'=>['show']]);
+    // Route::resource('/employee','EmployeeController' );
+    Route::get('/employee','EmployeeController@index' );
+    Route::get('/employee/create','EmployeeController@create' );
+    Route::post('/employee/create','EmployeeController@store' );
+    Route::get('/employee/edit/{id}','EmployeeController@edit' );
+    Route::put('/employee/update/{id}','EmployeeController@update' );
+    Route::delete('/employee/destroy/{id}','EmployeeController@destroy' );
+    // Route::get('/user/edit/{id}', 'UserController@edit');
+    // Route::post('/user/{id}', 'UserController@update');
+
+   // Route::resource('employee','EmployeeController',['except'=>['show']]);
     Route::get('/compose','MailBoxController@compose' )->name('compose');
     Route::get('/inbox','MailBoxController@inbox' )->name('inbox');
     Route::get('/Mail/Message','MailBoxController@message' )->name('message');
