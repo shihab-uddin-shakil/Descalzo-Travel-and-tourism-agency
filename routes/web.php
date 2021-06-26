@@ -36,7 +36,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/employee/update/{id}','EmployeeController@update' );
     Route::delete('/employee/destroy/{id}','EmployeeController@destroy' );
     // Route::get('/user/edit/{id}', 'UserController@edit');
+    Route::get('/transactions','TransactionController@Transaction' )->name('transaction');
+
+    Route::get('/payments','SalaryController@payment' )->name('payment');
+    Route::post('/payments','SalaryController@find' );
+
     // Route::post('/user/{id}', 'UserController@update');
+    Route::get('/tourist','TouristController@index' );
+    Route::post('/tourist/edit/{id}','TouristController@edit' );
 
    // Route::resource('employee','EmployeeController',['except'=>['show']]);
     Route::get('/compose','MailBoxController@compose' )->name('compose');
@@ -47,7 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/EUserList','TemporalController@EUserList' )->name('EUserList');
     Route::get('/Employee/Create','TemporalController@EUseeCreate' )->name('EUseeCreate');
     Route::get('/Employee/Group_Create','TemporalController@EGrpCreate' )->name('EGrpCreate');
-    Route::get('/Tourist','TemporalController@tourist' )->name('tourist');
+    // Route::get('/Tourist','TemporalController@tourist' )->name('tourist');
     Route::get('/Tourist/Transaction','TemporalController@touristTransaction' )->name('touristTransaction');
     Route::get('/Employee/Transaction','TemporalController@employeeTransaction' )->name('employeeTransaction');
     Route::get('/Hotel/Transaction','TemporalController@hotelTransaction' )->name('hotelTransaction');

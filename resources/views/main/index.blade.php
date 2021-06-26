@@ -68,7 +68,7 @@
                     <a href="#"><span class="fa fa-users"></span> <span class="xn-text">Tourist</span></a>
                     <ul>
 
-                        <li><a href="{{ route('tourist') }}"><span class="fa fa-user"></span>User</a></li>
+                        <li><a href="{{ url('tourist') }}"><span class="fa fa-user"></span>User</a></li>
 
                     </ul>
                 </li>
@@ -76,22 +76,17 @@
                 <li class="xn-openable">
                     <a href="#"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Transactions</span></a>
                     <ul>
-                        <li><a href="{{ route('employeeTransaction') }}"><span
-                                    class="fa fa-user xn-text">Employess</span></a>
+                        <li><a href="{{ route('transaction') }}"><span
+                                    class="fa  fa-bar-chart-o">Transaction</span></a>
                         </li>
-                        <li><a href="{{ route('touristTransaction') }}"><span
-                                    class="fa fa-user xn-text">Tourist</span></a></li>
-                        <li><a href="{{ route('hotelTransaction') }}"><span
-                                    class="fa fa-home xn-text">Hotel</span></a></li>
-                        <li><a href="{{ route('vehicleTransaction') }}"><span
-                                    class="fa fa-taxi xn-text">Vheicle</span></a></li>
+
                     </ul>
                 </li>
 
                 <li class="xn-openable">
                     <a href="#"><span class="fa fa-credit-card"></span> <span class="xn-text">Payments</span></a>
                     <ul>
-                        <li><a href="{{ route('NewPayment') }}"><span class="fa fa-money xn-text">Salary</span></a>
+                        <li><a href="{{ route('payment') }}"><span class="fa fa-money xn-text">Salary</span></a>
                         </li>
                         <li><a href="{{ route('PaymentHistory') }}"><span
                                     class="fa fa-history xn-text">History</span></a></li>

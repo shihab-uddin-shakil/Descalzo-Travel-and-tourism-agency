@@ -15,7 +15,7 @@ class CreateSalaryHistoriesTable extends Migration
     {
         Schema::create('salary_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('salary_id');
+            $table->foreignId('employee_id');
             $table->string('description')->nullable();
             $table->timestamps();
         });

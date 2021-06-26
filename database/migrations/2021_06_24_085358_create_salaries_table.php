@@ -17,6 +17,7 @@ class CreateSalariesTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->double('amount');
+            $table->string('account');
             $table->timestamps();
         });
     }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee_Category;
-use App\Models\Transaction;
+use App\Models\Employee;
+use App\Models\Tourist;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use  Illuminate\Support\Facades\DB;
 
-class EmployeeCategoryController extends Controller
+class TouristController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class EmployeeCategoryController extends Controller
      */
     public function index()
     {
-        $this->data['ecategories']=Employee_Category::all();
-        return view('EmployeeGroup.group',$this->data);
+        $this->data['tourists']=Tourist::all();
+        return view('Tourist.tourist',$this->data);
     }
 
     /**
@@ -28,7 +28,7 @@ class EmployeeCategoryController extends Controller
      */
     public function create()
     {
-        return view('EmployeeGroup.create');
+        //
     }
 
     /**
@@ -39,24 +39,7 @@ class EmployeeCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $titleData=$request->all();
-        if (  Employee_Category::create($titleData)) {
-            $transaction=[
-                'user_id'=>Auth::user()->id,
-                'activity'=>'Employee category created',
-                'description'=> $request->title.'  category created by '.Auth::user()->name
-
-
-            ];
-            Transaction::create($transaction);
-
-           Session::flash('message',"Emloyee Category Created Successfully..");
-        }
-        else {
-            Session::flash('message',"Emloyee Category   not Created .");
-
-        }
-        return redirect()->to('employee_categories');
+        //
     }
 
     /**
@@ -78,7 +61,20 @@ class EmployeeCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+       // $this->data['user']=Employee::findOrFail($id);
+        $user=DB::table('tourists')->find($id);
+
+        echo $user;
+        //$user->status=1;
+
+        // if ( $user->save()) {
+        //     Session::flash('message',"Tourist Updated Successfully..");
+        //  }
+        //  else {
+        //      Session::flash('message',"Tourist not Updated .");
+        //  }
+        //  return redirect()->to('tourist');
+
     }
 
     /**
@@ -101,13 +97,6 @@ class EmployeeCategoryController extends Controller
      */
     public function destroy($id)
     {
-        if (Employee_Category::find($id)->delete()) {
-            Session::flash('message',"Emloyee Category  Deleted Successfully..");
-         }
-         else {
-             Session::flash('message',"Emloyee Category  not Deleted .");
-         }
-
-         return redirect()->to('employee_categories');
+        //
     }
 }
