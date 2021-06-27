@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class SalaryHistory extends Model
 {
     use HasFactory;
-    protected $fillable=['employee_id','description'];
+    protected $fillable=['employee_id','amount','description'];
 }

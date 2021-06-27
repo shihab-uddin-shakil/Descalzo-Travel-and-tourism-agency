@@ -10,35 +10,37 @@
                 <!-- START DATATABLE EXPORT -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Transaction</h3>
+                        <h3 class="panel-title">Tourist Transaction</h3>
 
                     </div>
                     <div class="panel-body">
                         <table id="customers2" class="table datatable">
                             <thead>
+
                                 <tr>
                                     <th>Id</th>
-                                    <th>User Id</th>
-                                    <th>User </th>
-                                    <th>Activity</th>
+                                    <th>Tourist Id</th>
+                                    <th>Title</th>
                                     <th>Description</th>
-                                    <th> Created Date</th>
+                                    <th>Date</th>
+
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($transactions as $tr)
+                                @foreach ($complains as $complain)
+
+
                                     <tr>
-                                        <td>{{ $tr->id }}</td>
-                                        <td>{{ $tr->user_id }}</td>
-                                        <td>{{ $tr->user }}</td>
-                                        <td>{{ $tr->activity }}</td>
-                                        <td>{{ $tr->description }}</td>
-                                        <td>{{ $tr->created_at }}</td>
+                                        <td>{{ $complain->id }}</td>
+                                        <td>{{ $complain->user_id }}</td>
+                                        <td>{{ $complain->title }}</td>
+                                        <td>{{ $complain->message }}</td>
+                                        <td>{{ $complain->created_at }}</td>
+
 
                                     </tr>
                                 @endforeach
-
 
                             </tbody>
                         </table>

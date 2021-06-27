@@ -38,12 +38,18 @@ Route::group(['middleware' => 'auth'], function() {
     // Route::get('/user/edit/{id}', 'UserController@edit');
     Route::get('/transactions','TransactionController@Transaction' )->name('transaction');
 
+    Route::get('/complains','ComplainController@complain' )->name('complain');
+
     Route::get('/payments','SalaryController@payment' )->name('payment');
     Route::post('/payments','SalaryController@find' );
+    Route::get('/salary_historys','SalaryController@history' )->name('salary_historys');
 
     // Route::post('/user/{id}', 'UserController@update');
     Route::get('/tourist','TouristController@index' );
-    Route::post('/tourist/edit/{id}','TouristController@edit' );
+    Route::get('/tourist/edit/{id}','TouristController@edit' );
+    Route::get('/tourist/update/{id}','TouristController@update' );
+    Route::delete('/tourist/destroy/{id}','TouristController@destroy' );
+
 
    // Route::resource('employee','EmployeeController',['except'=>['show']]);
     Route::get('/compose','MailBoxController@compose' )->name('compose');

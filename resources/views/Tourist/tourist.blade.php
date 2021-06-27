@@ -41,18 +41,22 @@
                                         <td>{{ $user->status }}</td>
 
                                         <td>
-                                            <form method="post"
-                                                action="{{ url('tourist/edit/', ['user' => $user->id]) }}">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn btn btn-primary"> <i
-                                                        class="fa fa-check"></i> </button>
-                                            </form>
-                                            <form method="POST">
+
+                                            <form method="POST"
+                                                action="{{ url('tourist/destroy', ['user' => $user->id]) }}">
+
+                                                <a class=" btn btn btn-primary"
+                                                    href="{{ url('tourist/edit', ['user' => $user->id]) }}"> <i
+                                                        class="fa fa-check"></i> </a>
+
+
+                                                <a class=" btn btn btn-primary"
+                                                    href="{{ url('tourist/update', ['user' => $user->id]) }}"> <i
+                                                        class="fa fa-times"></i> </a>
 
 
                                                 @csrf
-
+                                                @method('DELETE')
                                                 <button onclick="return confirm('Are You Sure Want to delete?')"
                                                     type="submit" class=" btn btn-danger"><i class="fa fa-trash-o"
                                                         aria-hidden="true"></i></button>

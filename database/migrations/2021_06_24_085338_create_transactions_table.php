@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->string('user')->nullable();
             $table->string('activity')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();

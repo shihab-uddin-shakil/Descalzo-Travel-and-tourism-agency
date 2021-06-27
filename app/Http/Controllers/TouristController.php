@@ -17,6 +17,7 @@ class TouristController extends Controller
      */
     public function index()
     {
+       // $this->data['mode']='edit';
         $this->data['tourists']=Tourist::all();
         return view('Tourist.tourist',$this->data);
     }
@@ -62,11 +63,10 @@ class TouristController extends Controller
     public function edit($id)
     {
        // $this->data['user']=Employee::findOrFail($id);
-        $user=DB::table('tourists')->find($id);
-
-        echo $user;
+    //    $this->data['user']= Tourist::findOrFail($id);
         //$user->status=1;
-
+        Tourist:: where('id',$id)->update(['status'=>1]);
+        return redirect()->to('tourist');
         // if ( $user->save()) {
         //     Session::flash('message',"Tourist Updated Successfully..");
         //  }
@@ -74,6 +74,7 @@ class TouristController extends Controller
         //      Session::flash('message',"Tourist not Updated .");
         //  }
         //  return redirect()->to('tourist');
+        // return view('Tourist.form',$this->data);
 
     }
 
@@ -84,9 +85,10 @@ class TouristController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        Tourist:: where('id',$id)->update(['status'=>0]);
+        return redirect()->to('tourist');
     }
 
     /**
@@ -97,6 +99,13 @@ class TouristController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->data['user']= Tourist::findOrFail($id);
+        if ( Tourist::find($id)->delete()) {
+            Session::flash('message',"Tourist Deleted Successfully..");
+         }
+         else {
+             Session::flash('message',"Tourist not  Delet .");
+         }
+         return redirect()->to('tourist');
     }
 }

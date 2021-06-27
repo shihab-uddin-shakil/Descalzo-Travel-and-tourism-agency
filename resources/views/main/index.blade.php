@@ -88,10 +88,19 @@
                     <ul>
                         <li><a href="{{ route('payment') }}"><span class="fa fa-money xn-text">Salary</span></a>
                         </li>
-                        <li><a href="{{ route('PaymentHistory') }}"><span
+                        <li><a href="{{ route('salary_historys') }}"><span
                                     class="fa fa-history xn-text">History</span></a></li>
                     </ul>
                 </li>
+                <li class="">
+                    <a href="{{ route('complain') }}"><span class="fa fa-flag-checkered"></span> <span
+                            class="xn-text">Complains</span></a>
+
+                </li>
+                {{-- <li class="">
+                    <a href="#"><span class="fa fa-flag-o"></span> <span class="xn-text">Reports</span></a>
+                </li> --}}
+
 
             </ul>
             <!-- END X-NAVIGATION -->

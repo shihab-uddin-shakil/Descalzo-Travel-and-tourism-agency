@@ -43,6 +43,7 @@ class EmployeeCategoryController extends Controller
         if (  Employee_Category::create($titleData)) {
             $transaction=[
                 'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
                 'activity'=>'Employee category created',
                 'description'=> $request->title.'  category created by '.Auth::user()->name
 
