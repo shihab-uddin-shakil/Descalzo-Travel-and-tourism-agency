@@ -23,6 +23,7 @@
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Date</th>
+                                    <th>Action</th>
 
 
                                 </tr>
@@ -37,8 +38,15 @@
                                         <td>{{ $complain->title }}</td>
                                         <td>{{ $complain->message }}</td>
                                         <td>{{ $complain->created_at }}</td>
+                                        <form method="POST">
 
+                                            <td> <a class=" btn btn btn-primary"
+                                                    href="{{ url('complains/reply', ['user' => $complain->id]) }}">
+                                                    Reply<i class=""></i> </a>
+                                                @csrf
 
+                                        </form>
+                                        </td>
                                     </tr>
                                 @endforeach
 

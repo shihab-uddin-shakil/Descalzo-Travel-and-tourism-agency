@@ -19,6 +19,9 @@ class TransactionController extends Controller
     }
  public function profit()
  {
+    $this->data['employee']=DB::table('employees')->count('id');
+    $this->data['earn']=DB::table('payments')->sum('amount');
+    $this->data['pay']=DB::table('salaries')->sum('amount');
     $this->data['profit']=DB::table('payments')->sum('amount')-DB::table('salaries')->sum('amount');
     return view('main.dashboard',$this->data);
  }

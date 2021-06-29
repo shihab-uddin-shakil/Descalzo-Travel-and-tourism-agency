@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/transactions','TransactionController@Transaction' )->name('transaction');
 
     Route::get('/complains','ComplainController@complain' )->name('complain');
+    Route::get('/complains/reply{id}','ComplainController@edit' );
+    Route::post('/complains/store','ComplainController@update' );
 
     Route::get('/payments','SalaryController@payment' )->name('payment');
     Route::post('/payments','SalaryController@find' );
