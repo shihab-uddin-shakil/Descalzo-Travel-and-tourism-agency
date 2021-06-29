@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Tourist;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use  Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TouristController extends Controller
 {
@@ -65,7 +67,18 @@ class TouristController extends Controller
        // $this->data['user']=Employee::findOrFail($id);
     //    $this->data['user']= Tourist::findOrFail($id);
         //$user->status=1;
+
         Tourist:: where('id',$id)->update(['status'=>1]);
+        $transaction=[
+            'user_id'=>Auth::user()->id,
+            'user'=>Auth::user()->name,
+            'activity'=>' Tourist  user active ',
+            'description'=> '# '.$id.' Number Tourist  user  active by '.Auth::user()->name
+
+
+        ];
+        Transaction::create($transaction);
+
         return redirect()->to('tourist');
         // if ( $user->save()) {
         //     Session::flash('message',"Tourist Updated Successfully..");
@@ -88,6 +101,15 @@ class TouristController extends Controller
     public function update($id)
     {
         Tourist:: where('id',$id)->update(['status'=>0]);
+        $transaction=[
+            'user_id'=>Auth::user()->id,
+            'user'=>Auth::user()->name,
+            'activity'=>' Tourist  user Deactive ',
+            'description'=> $id.' Number Tourist  user Dactive by '.Auth::user()->name
+
+
+        ];
+        Transaction::create($transaction);
         return redirect()->to('tourist');
     }
 
@@ -101,6 +123,15 @@ class TouristController extends Controller
     {
         $this->data['user']= Tourist::findOrFail($id);
         if ( Tourist::find($id)->delete()) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>' Tourist  user Deleted ',
+                'description'=> '# '.$id.' Number Tourist  user deleted by '.Auth::user()->name
+
+
+            ];
+            Transaction::create($transaction);
             Session::flash('message',"Tourist Deleted Successfully..");
          }
          else {

@@ -21,8 +21,10 @@ Route::post('/Login', 'Auth\LoginController@confirm')->name('login.confirm');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', function () {
-        return view('main.dashboard');
+        return view('main.index');
     });
+
+    Route::get('/dashboard','TransactionController@profit');
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/employee_categories','EmployeeCategoryController@index' );
     Route::get('/employee_categories/create','EmployeeCategoryController@create' );
@@ -35,7 +37,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/employee/edit/{id}','EmployeeController@edit' );
     Route::put('/employee/update/{id}','EmployeeController@update' );
     Route::delete('/employee/destroy/{id}','EmployeeController@destroy' );
-    // Route::get('/user/edit/{id}', 'UserController@edit');
+    // Route::get('/user/edit/{id}', 'UserController@edit');packeges
+    Route::get('/packeges','PackageController@index' );
+    Route::get('/packeges/create','PackageController@create' );
+    Route::post('/packeges/create','PackageController@store' );
+    Route::delete('/packeges/{id}','PackageController@destroy' );
+
+
     Route::get('/transactions','TransactionController@Transaction' )->name('transaction');
 
     Route::get('/complains','ComplainController@complain' )->name('complain');
@@ -49,6 +57,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/tourist/edit/{id}','TouristController@edit' );
     Route::get('/tourist/update/{id}','TouristController@update' );
     Route::delete('/tourist/destroy/{id}','TouristController@destroy' );
+
+    Route::get('/review','ReviewController@index' );
+    Route::get('/review/edit/{id}','ReviewController@edit' );
+
+    Route::get('/report','ReportController@index' );
+    Route::get('/report/edit/{id}','ReportController@edit' );
+    // Route::get('/tourist/update/{id}','TouristController@update' );
+    Route::delete('/report/destroy/{id}','ReportController@destroy' );
 
 
    // Route::resource('employee','EmployeeController',['except'=>['show']]);

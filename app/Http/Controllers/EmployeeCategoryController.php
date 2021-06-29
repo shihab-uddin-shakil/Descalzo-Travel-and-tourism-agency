@@ -103,6 +103,15 @@ class EmployeeCategoryController extends Controller
     public function destroy($id)
     {
         if (Employee_Category::find($id)->delete()) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>'Employee category deleted',
+                'description'=> ' category deleted by '.Auth::user()->name
+
+
+            ];
+            Transaction::create($transaction);
             Session::flash('message',"Emloyee Category  Deleted Successfully..");
          }
          else {

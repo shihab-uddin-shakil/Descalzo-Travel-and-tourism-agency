@@ -31,7 +31,8 @@
 
                 <li class="xn-title">Navigation</li>
                 <li class="active">
-                    <a href=""><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                    <a href="{{ url('dashboard') }}"><span class="fa fa-desktop"></span> <span
+                            class="xn-text">Dashboard</span></a>
                 </li>
                 {{-- <li class="xn-openable">
                     <a href="#"><span class="fa fa-files-o"></span> <span class="xn-text">Personal</span></a>
@@ -69,6 +70,8 @@
                     <ul>
 
                         <li><a href="{{ url('tourist') }}"><span class="fa fa-user"></span>User</a></li>
+                        <li><a href="{{ url('review') }}"><span class="fa "></span>Review</a></li>
+                        <li><a href="{{ url('packeges') }}"><span class="fa "></span>Packge</a></li>
 
                     </ul>
                 </li>
@@ -95,6 +98,11 @@
                 <li class="">
                     <a href="{{ route('complain') }}"><span class="fa fa-flag-checkered"></span> <span
                             class="xn-text">Complains</span></a>
+
+                </li>
+                <li class="">
+                    <a href="{{ url('report') }}"><span class="fa fa-flag"></span> <span
+                            class="xn-text">Reports</span></a>
 
                 </li>
                 {{-- <li class="">

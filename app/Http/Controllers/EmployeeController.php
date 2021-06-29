@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 use App\Models\Employee_Category;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -45,6 +47,16 @@ class EmployeeController extends Controller
        // $data['category_id']=$request['group'];
     //  return $data;
         if ( Employee::create($data)) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>' New Employee Added',
+                'description'=> $request->name.'  user employee added by '.Auth::user()->name
+
+
+            ];
+            Transaction::create($transaction);
+
          Session::flash('message',"Employee Created Successfully..");
       }
       else {
@@ -104,6 +116,15 @@ class EmployeeController extends Controller
 
 
         if ( $user->save()) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>' Employee Updated',
+                'description'=> $request->name.'  user employee information updated by '.Auth::user()->name
+
+
+            ];
+            Transaction::create($transaction);
          Session::flash('message',"Employee Updated Successfully..");
       }
       else {
@@ -123,6 +144,15 @@ class EmployeeController extends Controller
     {
         $this->data['user']= Employee::findOrFail($id);
         if ( Employee::find($id)->delete()) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>'  Employee Deleted',
+                'description'=> '# '.$id.' Number employee deleted by '.Auth::user()->name
+
+
+            ];
+            Transaction::create($transaction);
             Session::flash('message',"Employee Deleted Successfully..");
          }
          else {

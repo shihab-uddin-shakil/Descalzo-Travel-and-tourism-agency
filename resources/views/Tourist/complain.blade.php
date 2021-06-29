@@ -10,7 +10,7 @@
                 <!-- START DATATABLE EXPORT -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tourist Transaction</h3>
+                        <h3 class="panel-title">Tourist Complain</h3>
 
                     </div>
                     <div class="panel-body">
