@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Tourist\LoginController;
+use App\Http\Controllers\Tourist\DashboardController;
+use App\Http\Controllers\Tourist\BookHotelController;
+use App\Http\Controllers\Tourist\LogoutController;
+use App\Http\Controllers\hotel\AddHotelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,32 +19,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login.index');
-});
-Route::get('/Login', 'Auth\LoginController@Login')->name('login');
-Route::post('/Login', 'Auth\LoginController@confirm')->name('login.confirm');
+Route::get('/', [HomeController::class,'index'])->name('homePage');
+Route::get('/listing', [HomeController::class,'hotelList'])->name('hotelList');
+Route::get('/listing-single', [HomeController::class,'hotelSingleList'])->name('hotelSingleList');
+Route::get('/listing-single/{id}', [HomeController::class,'hotelSingleListShow'])->name('hotelSingleListShow');
+Route::get('/booking-single/{id}', [BookHotelController::class,'index'])->name('bookHotel');
+Route::post('/booking-single/{id}', [BookHotelController::class,'store'])->name('bookHotel');
+Route::get('/contacts', [HomeController::class,'contacts'])->name('contactPage');
+Route::get('/blogs', [HomeController::class,'blogs'])->name('blogPage');
+Route::get('/blog-single', [HomeController::class,'blogSingle'])->name('singleBlogPage');
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::get('/dashboard', function () {
-        return view('main.dashboard');
-    });
-    Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-    Route::get('/EmployeeList','EmployeeController@index');
-    Route::get('/compose','MailBoxController@compose' )->name('compose');
-    Route::get('/inbox','MailBoxController@inbox' )->name('inbox');
-    Route::get('/Mail/Message','MailBoxController@message' )->name('message');
-    Route::get('/Message','MessageController@index' )->name('Message');
-    Route::get('/Calender','TemporalController@calender' )->name('calender');
-    Route::get('/EUserList','TemporalController@EUserList' )->name('EUserList');
-    Route::get('/Employee/Create','TemporalController@EUseeCreate' )->name('EUseeCreate');
-    Route::get('/Employee_gorup','TemporalController@EGrpList' )->name('EGrpList');
-    Route::get('/Employee/Group_Create','TemporalController@EGrpCreate' )->name('EGrpCreate');
-    Route::get('/Tourist','TemporalController@tourist' )->name('tourist');
-    Route::get('/Tourist/Transaction','TemporalController@touristTransaction' )->name('touristTransaction');
-    Route::get('/Employee/Transaction','TemporalController@employeeTransaction' )->name('employeeTransaction');
-    Route::get('/Hotel/Transaction','TemporalController@hotelTransaction' )->name('hotelTransaction');
-    Route::get('/Vehicle/Transaction','TemporalController@vehicleTransaction' )->name('vehicleTransaction');
-    Route::get('/Payment/History','TemporalController@PaymentHistory' )->name('PaymentHistory');
-    Route::get('/Payment/New','TemporalController@NewPayment' )->name('NewPayment');
+//Route::post('/', [LoginController::class,'verify'])->name('homePage');
+
+Route::get('/logout', [LogoutController::class,'index'])->name('logout');
+Route::get('/login', [LoginController::class,'login'])->name('login');
+Route::post('/login', [LoginController::class,'verify'])->name('login');
+Route::get('/registration', [LoginController::class,'registration'])->name('registration');
+Route::post('/registration', [LoginController::class,'registrationVerify'])->name('registration');
+
+Route::group(['middleware'=>['sess']],function(){
+
+    Route::get('/home', [DashboardController::class,'index'])->name('home');
+    //Route::get('/home', [DashboardController::class,'view'])->name('home');
+    Route::get('/dashboard-myprofile', [DashboardController::class,'profile'])->name('dashboard');
+    Route::post('/dashboard-myprofile', [DashboardController::class,'update'])->name('dashboard');
+    Route::get('/dashboard-messages', [DashboardController::class,'dashboardMessages'])->name('dashboardMessages');
+    Route::get('/dashboard-bookings', [DashboardController::class,'dashboardBookings'])->name('dashboardBookings');
+    Route::get('/delete/{id}', [DashboardController::class,'delete']);
+    Route::get('/dashboard-review', [DashboardController::class,'dashboardReview'])->name('dashboardReview');
+
 });
+
+Route::get('/add-hotel', [AddHotelController::class,'index'])->name('addHotel');
+Route::post('/add-hotel', [AddHotelController::class,'create'])->name('addHotel');
+
+
+
+

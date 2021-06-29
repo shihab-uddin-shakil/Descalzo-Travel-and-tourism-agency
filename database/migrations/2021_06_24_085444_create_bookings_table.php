@@ -17,6 +17,7 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->foreignId('tour_id');
             $table->foreignId('tourist_id');
+            $table->string('name');
             $table->string('date')->nullable();
             $table->string('destination')->nullable();
             $table->string('passport')->nullable();
