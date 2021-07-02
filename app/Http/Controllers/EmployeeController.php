@@ -10,4 +10,6 @@ class EmployeeController extends Controller
     {
         return view('employee.employeelist');
     }
+
+    
 }

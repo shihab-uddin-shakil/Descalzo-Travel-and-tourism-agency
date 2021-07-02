@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,32 +15,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login.index');
-});
-Route::get('/Login', 'Auth\LoginController@Login')->name('login');
-Route::post('/Login', 'Auth\LoginController@confirm')->name('login.confirm');
+Route::get('/home', 'HomeController@home')->name('home');
+//  Route::get('/', function () {
+//      return view('login.index');
+//  });
+Route::get('/logout', 'LogoutController@index')->name('logout');
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::get('/dashboard', function () {
-        return view('main.dashboard');
-    });
-    Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-    Route::get('/EmployeeList','EmployeeController@index');
-    Route::get('/compose','MailBoxController@compose' )->name('compose');
-    Route::get('/inbox','MailBoxController@inbox' )->name('inbox');
-    Route::get('/Mail/Message','MailBoxController@message' )->name('message');
-    Route::get('/Message','MessageController@index' )->name('Message');
-    Route::get('/Calender','TemporalController@calender' )->name('calender');
-    Route::get('/EUserList','TemporalController@EUserList' )->name('EUserList');
-    Route::get('/Employee/Create','TemporalController@EUseeCreate' )->name('EUseeCreate');
-    Route::get('/Employee_gorup','TemporalController@EGrpList' )->name('EGrpList');
-    Route::get('/Employee/Group_Create','TemporalController@EGrpCreate' )->name('EGrpCreate');
-    Route::get('/Tourist','TemporalController@tourist' )->name('tourist');
-    Route::get('/Tourist/Transaction','TemporalController@touristTransaction' )->name('touristTransaction');
-    Route::get('/Employee/Transaction','TemporalController@employeeTransaction' )->name('employeeTransaction');
-    Route::get('/Hotel/Transaction','TemporalController@hotelTransaction' )->name('hotelTransaction');
-    Route::get('/Vehicle/Transaction','TemporalController@vehicleTransaction' )->name('vehicleTransaction');
-    Route::get('/Payment/History','TemporalController@PaymentHistory' )->name('PaymentHistory');
-    Route::get('/Payment/New','TemporalController@NewPayment' )->name('NewPayment');
+Route::get('/', 'LoginController@login')->name('login');
+Route::post('/', 'LoginController@verify')->name('verify');
+Route::group(['middleware' => ['sess']], function () {
+
+    Route::get('/index', 'dashboardController@index');
+    Route::get('/dashboard', 'dashboardController@dashboard')->name('dashboard');
+    Route::get('/EmployeeList', 'EmployeeController@index');
+    Route::get('/inbox', 'MessageBoxController@inbox')->name('inbox');
+    Route::get('/vehicle', 'VehicleController@vehicle')->name('vehicle');
+    Route::post('/vehicle', 'VehicleController@submit');
+
+    Route::get('/guide', 'GuideController@guide')->name('guide');
+    Route::post('/guide', 'GuideController@submit');
+
+    // Route::post('/user/{id}', 'UserController@update');
+    Route::get('/hotel', 'HotelController@index');
+    Route::get('/hotel/edit/{id}', 'HotelController@edit');
+    Route::get('/hotel/update/{id}', 'HotelController@update');
+    Route::delete('/hotel/destroy/{id}', 'HotelController@destroy');
+
+
+    Route::get('/report', 'ReportController@report');
+    Route::get('/report/create', 'ReportController@create');
+    Route::post('/report/create', 'ReportController@store');
+
+
+
+    Route::get('/message', 'MessageBoxController@message')->name('message');
+    Route::get('/compose', 'MessageBoxController@compose')->name('compose');
+    Route::get('/msg', 'MessageBoxController@msg')->name('msg');
+    Route::get('/search', 'MessageBoxController@search')->name('search');
+    Route::get('/calendar', 'MessageBoxController@calendar')->name('calendar');
+    Route::get('/data', 'TableController@data')->name('data');
+    Route::get('/export', 'TableController@export')->name('export');
 });
