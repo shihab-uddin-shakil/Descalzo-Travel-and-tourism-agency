@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Report;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+=======
+use App\Http\Requests\ReportRequest;
+use App\Models\report;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+>>>>>>> f55aa5ce7f9acfdf056cfcf635728cc7366e1f58
 use Illuminate\Support\Facades\Session;
 
 class ReportController extends Controller
 {
+<<<<<<< HEAD
     public function index()
 {
    // $this->data['mode']='edit';
@@ -68,3 +76,30 @@ class ReportController extends Controller
          return redirect()->to('report');
     }
 }
+=======
+    public function report(){
+        $this->data['reports']=report::all();
+        return view('report',$this->data);
+    
+   
+
+}
+public function create(){
+    return view ('reportlist');
+}
+  public function store(ReportRequest $req){
+    //    return $req->all();
+       $report=[
+           'employee_id'=>1,
+                    'type'=>$req->type,
+                    'description'=> $req->description,
+                    'status'=> 0
+                ];
+
+                report::create($report);
+                return redirect()->to('report');
+
+  }
+    
+}
+>>>>>>> f55aa5ce7f9acfdf056cfcf635728cc7366e1f58

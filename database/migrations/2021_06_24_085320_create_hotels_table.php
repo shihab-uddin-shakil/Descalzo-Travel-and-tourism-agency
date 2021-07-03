@@ -18,10 +18,10 @@ class CreateHotelsTable extends Migration
             $table->foreignId('category_id');
             $table->foreignId('hotel_owner_id');
             $table->string('name');
-            $table->string('address')->nullable();
-            $table->double('available');
+            $table->string('address');
+            $table->string('details');
             $table->double('price');
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }

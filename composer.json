@@ -12,8 +12,12 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
+<<<<<<< HEAD
         "laravelcollective/html": "^6.2",
         "pusher/pusher-php-server": "~3.0"
+=======
+        "laravelcollective/html": "^6.2"
+>>>>>>> f55aa5ce7f9acfdf056cfcf635728cc7366e1f58
     },
     "require-dev": {
         "facade/ignition": "^2.5",
