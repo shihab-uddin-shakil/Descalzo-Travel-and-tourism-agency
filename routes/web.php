@@ -3,6 +3,12 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Tourist\LoginController;
+use App\Http\Controllers\Tourist\DashboardController;
+use App\Http\Controllers\Tourist\BookHotelController;
+use App\Http\Controllers\Tourist\LogoutController;
+use App\Http\Controllers\hotel\AddHotelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +62,40 @@ Route::group(['middleware' => ['sess']], function () {
     Route::get('/data', 'TableController@data')->name('data');
     Route::get('/export', 'TableController@export')->name('export');
 });
+Route::get('/', [HomeController::class,'index'])->name('homePage');
+Route::get('/listing', [HomeController::class,'hotelList'])->name('hotelList');
+Route::get('/listing-single', [HomeController::class,'hotelSingleList'])->name('hotelSingleList');
+Route::get('/listing-single/{id}', [HomeController::class,'hotelSingleListShow'])->name('hotelSingleListShow');
+Route::get('/booking-single/{id}', [BookHotelController::class,'index'])->name('bookHotel');
+Route::post('/booking-single/{id}', [BookHotelController::class,'store'])->name('bookHotel');
+Route::get('/contacts', [HomeController::class,'contacts'])->name('contactPage');
+Route::get('/blogs', [HomeController::class,'blogs'])->name('blogPage');
+Route::get('/blog-single', [HomeController::class,'blogSingle'])->name('singleBlogPage');
+
+//Route::post('/', [LoginController::class,'verify'])->name('homePage');
+
+Route::get('/logout', [LogoutController::class,'index'])->name('logout');
+Route::get('/login', [LoginController::class,'login'])->name('login');
+Route::post('/login', [LoginController::class,'verify'])->name('login');
+Route::get('/registration', [LoginController::class,'registration'])->name('registration');
+Route::post('/registration', [LoginController::class,'registrationVerify'])->name('registration');
+
+Route::group(['middleware'=>['sess']],function(){
+
+    Route::get('/home', [DashboardController::class,'index'])->name('home');
+    //Route::get('/home', [DashboardController::class,'view'])->name('home');
+    Route::get('/dashboard-myprofile', [DashboardController::class,'profile'])->name('dashboard');
+    Route::post('/dashboard-myprofile', [DashboardController::class,'update'])->name('dashboard');
+    Route::get('/dashboard-messages', [DashboardController::class,'dashboardMessages'])->name('dashboardMessages');
+    Route::get('/dashboard-bookings', [DashboardController::class,'dashboardBookings'])->name('dashboardBookings');
+    Route::get('/delete/{id}', [DashboardController::class,'delete']);
+    Route::get('/dashboard-review', [DashboardController::class,'dashboardReview'])->name('dashboardReview');
+
+});
+
+Route::get('/add-hotel', [AddHotelController::class,'index'])->name('addHotel');
+Route::post('/add-hotel', [AddHotelController::class,'create'])->name('addHotel');
+
+
+
+

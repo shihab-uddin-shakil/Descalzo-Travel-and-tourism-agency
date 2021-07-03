@@ -9,4 +9,9 @@ class Hotel_Owner extends Model
 {
     use HasFactory;
     protected $fillable=['name','username','password','account','phone','email','address','status'];
+    protected $fillable = [
+        'email',
+        'password',
+         
+    ];
 }

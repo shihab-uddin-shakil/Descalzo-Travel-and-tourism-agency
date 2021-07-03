@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'sess'=>\App\Http\Middleware\SessionVerify::class,
 
 
+        'sess' => \App\Http\Middleware\SessionVerify::class
     ];
 }
