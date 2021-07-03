@@ -22,7 +22,6 @@ class CreateHotelOwnersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('account');
-            $table->boolean('status');
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Models\Employee;
+use App\Models\Hotel_Owner;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -13,7 +13,7 @@ class LoginController extends Controller
     }
     public function verify(LoginRequest $reg)
     {
-        $result = Employee::where('email',$reg->email)
+        $result = Hotel_Owner::where('email',$reg->email)
                             ->where('password',$reg->password)
                             ->get();
         

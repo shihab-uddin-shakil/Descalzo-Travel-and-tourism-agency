@@ -18,12 +18,10 @@ class SessionVerify
     {
         if($request->session()->has('email')){
  
-
             return $next($request);
         }
         else{
             return redirect('/');
         }
-        
     }
 }
