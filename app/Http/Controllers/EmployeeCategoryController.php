@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee_Category;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class EmployeeCategoryController extends Controller
@@ -39,6 +41,16 @@ class EmployeeCategoryController extends Controller
     {
         $titleData=$request->all();
         if (  Employee_Category::create($titleData)) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>'Employee category created',
+                'description'=> $request->title.'  category created by '.Auth::user()->name
+
+
+            ];
+            Transaction::create($transaction);
+
            Session::flash('message',"Emloyee Category Created Successfully..");
         }
         else {
@@ -91,6 +103,15 @@ class EmployeeCategoryController extends Controller
     public function destroy($id)
     {
         if (Employee_Category::find($id)->delete()) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>'Employee category deleted',
+                'description'=> ' category deleted by '.Auth::user()->name
+
+
+            ];
+            Transaction::create($transaction);
             Session::flash('message',"Emloyee Category  Deleted Successfully..");
          }
          else {

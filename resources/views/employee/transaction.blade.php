@@ -10,79 +10,36 @@
                 <!-- START DATATABLE EXPORT -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Employee Transaction</h3>
-                       
+                        <h3 class="panel-title">Transaction</h3>
+
                     </div>
                     <div class="panel-body">
                         <table id="customers2" class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                    <th>Action</th>
-                                    
+                                    <th>Id</th>
+                                    <th>User Id</th>
+                                    <th>User </th>
+                                    <th>Activity</th>
+                                    <th>Description</th>
+                                    <th> Created Date</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                     <td>
-                                        <form method="POST">
+                                @foreach ($transactions as $tr)
+                                    <tr>
+                                        <td>{{ $tr->id }}</td>
+                                        <td>{{ $tr->user_id }}</td>
+                                        <td>{{ $tr->user }}</td>
+                                        <td>{{ $tr->activity }}</td>
+                                        <td>{{ $tr->description }}</td>
+                                        <td>{{ $tr->created_at }}</td>
 
-                                            
-                                            @csrf
-                                           
-                                            <button onclick="return confirm('Are You Sure Want to delete?')" type="submit"
-                                                class=" btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                    <td>$170,750</td>
-                                     <td>
-                                        <form method="POST">
+                                    </tr>
+                                @endforeach
 
-                                           
-                                            @csrf
-                                           
-                                           <button onclick="return confirm('Are You Sure Want to delete?')" type="submit"
-                                                class=" btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ashton Cox</td>
-                                    <td>Junior Technical Author</td>
-                                    <td>San Francisco</td>
-                                    <td>66</td>
-                                    <td>2009/01/12</td>
-                                    <td>$86,000</td>
-                                     <td>
-                                         <form method="POST">
 
-                                          
-                                            @csrf
-                                           
-                                           <button onclick="return confirm('Are You Sure Want to delete?')" type="submit"
-                                                class=" btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                
                             </tbody>
                         </table>
 
