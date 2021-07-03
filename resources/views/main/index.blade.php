@@ -30,7 +30,12 @@
                 </li>
                 <li class="xn-title">Navigation</li>
                 <li class="active">
+<<<<<<< HEAD
+                    <a href="{{ url('dashboard') }}"><span class="fa fa-desktop"></span> <span
+                            class="xn-text">Dashboard</span></a>
+=======
                     <a href="{{route('dashboard')}}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+>>>>>>> f55aa5ce7f9acfdf056cfcf635728cc7366e1f58
                 </li>
                <li class="xn-openable">
                     <li><a href="http://127.0.0.1:8000/EmployeeList"><span class="fa fa-user"></span> Profile</a></li>
@@ -71,12 +76,76 @@
                         <li><a href="{{route('export')}}"><span class="fa fa-download"></span> Export Tables</a></li>
                     </ul>
                 </li>
+<<<<<<< HEAD
+                <li><a href="{{ route('Message') }}"><span class="fa fa-comments"></span> Messages</a></li>
+                <li><a href="{{ route('calender') }}"><span class="fa fa-calendar"></span> Calendar</a></li>
+
+
+
+                {{-- </ul>
+                </li> --}}
+
+                <li class="xn-title">All Users</li>
+                <li class="xn-openable">
+                    <a href="#"><span class="fa fa-users"></span> <span class="xn-text">Employees</span></a>
+                    <ul>
+                        <li><a href="{{ url('employee') }}"><span class="fa fa-user"></span>User</a></li>
+                        <li><a href="{{ url('employee_categories') }}"><span class="fa fa-users"></span>Group</a></li>
+
+                    </ul>
+                </li>
+                <li class="xn-openable">
+                    <a href="#"><span class="fa fa-users"></span> <span class="xn-text">Tourist</span></a>
+                    <ul>
+
+                        <li><a href="{{ url('tourist') }}"><span class="fa fa-user"></span>User</a></li>
+                        <li><a href="{{ url('review') }}"><span class="fa "></span>Review</a></li>
+                        <li><a href="{{ url('packeges') }}"><span class="fa "></span>Packge</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="xn-openable">
+                    <a href="#"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Transactions</span></a>
+                    <ul>
+                        <li><a href="{{ route('transaction') }}"><span
+                                    class="fa  fa-bar-chart-o">Transaction</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="xn-openable">
+                    <a href="#"><span class="fa fa-credit-card"></span> <span class="xn-text">Payments</span></a>
+                    <ul>
+                        <li><a href="{{ route('payment') }}"><span class="fa fa-money xn-text">Salary</span></a>
+                        </li>
+                        <li><a href="{{ route('salary_historys') }}"><span
+                                    class="fa fa-history xn-text">History</span></a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="{{ route('complain') }}"><span class="fa fa-flag-checkered"></span> <span
+                            class="xn-text">Complains</span></a>
+
+                </li>
+                <li class="">
+                    <a href="{{ url('report') }}"><span class="fa fa-flag"></span> <span
+                            class="xn-text">Reports</span></a>
+
+                </li>
+                {{-- <li class="">
+                    <a href="#"><span class="fa fa-flag-o"></span> <span class="xn-text">Reports</span></a>
+                </li> --}}
+
+=======
               
                 <li>
                     <a href="maps.html"><span class="fa fa-map-marker"></span> <span class="xn-text">Maps</span></a>
                 </li>
 
              
+>>>>>>> f55aa5ce7f9acfdf056cfcf635728cc7366e1f58
 
             </ul>
             <!-- END X-NAVIGATION -->
@@ -206,8 +275,18 @@
         
 
             <!-- PAGE CONTENT WRAPPER -->
+<<<<<<< HEAD
+            @if (session('message'))
+                <div class="alert alert-primary" role="alert">
+                    {{ session('message') }}
+                </div>
+            @endif
+            @yield('content')
+
+=======
               @yield('content')
               
+>>>>>>> f55aa5ce7f9acfdf056cfcf635728cc7366e1f58
             <!-- END PAGE CONTENT WRAPPER -->
         </div>
         <!-- END PAGE CONTENT -->

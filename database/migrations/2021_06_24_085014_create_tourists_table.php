@@ -21,6 +21,7 @@ class CreateTouristsTable extends Migration
             $table->string('email');
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->boolean('status')->nullable();
             $table->string('account');
             $table->timestamps();
         });

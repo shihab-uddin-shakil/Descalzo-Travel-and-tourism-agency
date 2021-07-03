@@ -12,46 +12,47 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">History</h3>
                         <div class="btn-group pull-right">
-                            <a href="{{route('NewPayment')}}"class="btn btn-info "><i class="fa fa-plus"></i>
+                            <a href="{{ route('NewPayment') }}" class="btn btn-info "><i class="fa fa-plus"></i>
                                 NewPayment</a>
 
                         </div>
-                       
+
                     </div>
                     <div class="panel-body">
                         <table id="customers2" class="table datatable">
                             <thead>
                                 <tr>
-                                
+
                                     <th>Id</th>
-                                    <th>Employee Name</th>
+                                    <th>Employee Id</th>
+                                    <th>Paid amount</th>
                                     <th>Description</th>
-                                    <th>Credit card</th>
-                                    
                                     <th>Date</th>
-                                    <th>Amount</th>
-                                    
-                                    
+
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>nabill</td>
-                                    <td>give salary</td>
-                                    <td>6112332323</td>
-                                    <td>2021/04/25</td>
-                                    <td>$320,800</td>
-                                     
-                                </tr>
-                                
-                                
+                                @foreach ($historys as $history)
+
+
+                                    <tr>
+                                        <td>{{ $history->id }}</td>
+                                        <td>{{ $history->employee_id }}</td>
+                                        <td>{{ $history->amount }}</td>
+                                        <td>{{ $history->description }}</td>
+                                        <td>{{ $history->created_at }}</td>
+
+
+                                    </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
 
                     </div>
                 </div>
-               
+
 
 
 
