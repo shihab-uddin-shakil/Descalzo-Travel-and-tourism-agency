@@ -41,7 +41,7 @@
                                         <form method="POST">
 
                                             <td> <a class=" btn btn btn-primary"
-                                                    href="{{ url('complains/reply', ['user' => $complain->id]) }}">
+                                                    href="{{ url('complains/edit', ['complain' => $complain->id]) }}">
                                                     Reply<i class=""></i> </a>
                                                 @csrf
 

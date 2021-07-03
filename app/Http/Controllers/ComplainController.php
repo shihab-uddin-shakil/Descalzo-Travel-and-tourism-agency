@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complain;
+use App\Models\ReplyComplain;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,22 +12,27 @@ class ComplainController extends Controller
 {
    public function complain()
    {
+
       $this->data['complains']=DB::table('complains')->where('recever_id',
       Auth::user()->id)->get();
       return view('Tourist.complain',$this->data);
    }
    public function edit($id)
     {
+       // $this->data['mode']="rp";
 
-        $this->data['user']= Complain::findOrFail($id);
+        $this->data['complain']= Complain::findOrFail($id);
         //$this->data['mode']='edit';
         return view('Tourist.form',$this->data);
     }
     public function store(Request $request)
     {
+        // $this->data['mode']="rppp";
+
         $data=$request->all();
 
-       return $data;
+    //    return $data;
+       ReplyComplain::create($data);
 
     //     if ( $user->save()) {
     //         $transaction=[
@@ -43,7 +49,7 @@ class ComplainController extends Controller
     //   else {
     //       Session::flash('message',"EMPLOYEE not Updated .");
     //   }
-    //   return redirect()->to('employee');
+      return redirect()->to('complains');
 
     }
 }
