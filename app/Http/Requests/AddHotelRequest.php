@@ -27,9 +27,6 @@ class AddHotelRequest extends FormRequest
             'name'=>'required',
             'address'=>'required',
             'details'=>'required',
-            'email'=>'required',
-            'website'=>'required',
-            'phone'=>'required',
             'price'=>'required',
             'image'=>'required|mimes:jpg,png,jpeg'
         ];

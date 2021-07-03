@@ -12,21 +12,21 @@ class ReportController extends Controller
 {
     public function report(){
         $this->data['reports']=report::all();
-        return view('report.report',$this->data);
+        return view('report',$this->data);
     
    
 
 }
 public function create(){
-    return view ('report.reportlist');
+    return view ('reportlist');
 }
   public function store(ReportRequest $req){
-    //return $req->all();
+    //    return $req->all();
        $report=[
-                  'employee_id'=>1,
+           'employee_id'=>1,
                     'type'=>$req->type,
                     'description'=> $req->description,
-                    'status'=> 'pending'//0
+                    'status'=> 0
                 ];
 
                 report::create($report);
