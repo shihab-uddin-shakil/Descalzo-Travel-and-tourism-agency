@@ -15,13 +15,14 @@ class CreateHotelsTable extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id');
-            $table->foreignId('hotel_owner_id');
             $table->string('name');
-            $table->string('address')->nullable();
-            $table->double('available');
+            $table->string('address');
+            $table->string('details');
+            $table->string('email');
+            $table->string('website');
+            $table->string('phone');
             $table->double('price');
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }
