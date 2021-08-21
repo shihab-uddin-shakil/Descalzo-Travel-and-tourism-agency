@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Tourist;
 use App\Models\Transaction;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use  Illuminate\Support\Facades\DB;
@@ -20,8 +21,21 @@ class TouristController extends Controller
     public function index()
     {
        // $this->data['mode']='edit';
-        $this->data['tourists']=Tourist::all();
-        return view('Tourist.tourist',$this->data);
+       $tourist =Tourist::all();
+       try {
+          // $users = app('db')->table('users')->get();
+           return response()->json([
+               'success' => true,
+               'users'   => $tourist
+           ], 200);
+       } catch (Exception $ex) {
+           return response()->json([
+               'success'=>false,
+               'message'=>$ex->getMessage(),
+           ]);
+        }
+        // $this->data['tourists']=
+        // return view('Tourist.tourist',$this->data);
     }
 
     /**
@@ -67,19 +81,40 @@ class TouristController extends Controller
        // $this->data['user']=Employee::findOrFail($id);
     //    $this->data['user']= Tourist::findOrFail($id);
         //$user->status=1;
+       try {
+           if ( Tourist:: where('id',$id)->update(['status'=>1])) {
+            $transaction=[
+                'user_id'=>Auth::user()->id,
+                'user'=>Auth::user()->name,
+                'activity'=>' Tourist  user active ',
+                'description'=> '# '.$id.' Number Tourist  user  active by '.Auth::user()->name
 
-        Tourist:: where('id',$id)->update(['status'=>1]);
-        $transaction=[
-            'user_id'=>Auth::user()->id,
-            'user'=>Auth::user()->name,
-            'activity'=>' Tourist  user active ',
-            'description'=> '# '.$id.' Number Tourist  user  active by '.Auth::user()->name
+
+            ];
+            Transaction::create($transaction);
+
+            return response()->json([
+                'success'=>true,
+                'message'=> "Yes! Tourist acivate successfully"
+            ]);
+           }
+       else {
+        return response()->json([
+            'success'=>false,
+            'message'=> "Error! Tourist Not  acivate"
+        ]);
+       }
 
 
-        ];
-        Transaction::create($transaction);
+    }catch(Exception $ex){
+        return response()->json([
+            'success'=>false,
+            'message'=>$ex->getMessage()
 
-        return redirect()->to('tourist');
+        ]);
+
+    }
+
         // if ( $user->save()) {
         //     Session::flash('message',"Tourist Updated Successfully..");
         //  }
@@ -100,17 +135,40 @@ class TouristController extends Controller
      */
     public function update($id)
     {
-        Tourist:: where('id',$id)->update(['status'=>0]);
-        $transaction=[
-            'user_id'=>Auth::user()->id,
-            'user'=>Auth::user()->name,
-            'activity'=>' Tourist  user Deactive ',
-            'description'=> $id.' Number Tourist  user Dactive by '.Auth::user()->name
+        try {
+            if ( Tourist:: where('id',$id)->update(['status'=>0])) {
+                $transaction=[
+                    'user_id'=>Auth::user()->id,
+                    'user'=>Auth::user()->name,
+                    'activity'=>' Tourist  user Deactive ',
+                    'description'=> $id.' Number Tourist  user Dactive by '.Auth::user()->name
 
 
-        ];
-        Transaction::create($transaction);
-        return redirect()->to('tourist');
+                ];
+                Transaction::create($transaction);
+
+             return response()->json([
+                 'success'=>true,
+                 'message'=> "Yes! Tourist Deacivate successfully"
+             ]);
+            }
+        else {
+         return response()->json([
+             'success'=>false,
+             'message'=> "Error! Tourist Not  Deacivate"
+         ]);
+        }
+
+
+     }catch(Exception $ex){
+         return response()->json([
+             'success'=>false,
+             'message'=>$ex->getMessage()
+
+         ]);
+
+
+        }
     }
 
     /**
@@ -121,22 +179,36 @@ class TouristController extends Controller
      */
     public function destroy($id)
     {
-        $this->data['user']= Tourist::findOrFail($id);
-        if ( Tourist::find($id)->delete()) {
-            $transaction=[
-                'user_id'=>Auth::user()->id,
-                'user'=>Auth::user()->name,
-                'activity'=>' Tourist  user Deleted ',
-                'description'=> '# '.$id.' Number Tourist  user deleted by '.Auth::user()->name
+        // $this->data['user']= Tourist::findOrFail($id);
+        try {
+            if ( Tourist::find($id)->delete()) {
+                $transaction=[
+                    'user_id'=>Auth::user()->id,
+                    'user'=>Auth::user()->name,
+                    'activity'=>' Tourist  user Deleted ',
+                    'description'=> '# '.$id.' Number Tourist  user deleted by '.Auth::user()->name
 
 
-            ];
-            Transaction::create($transaction);
-            Session::flash('message',"Tourist Deleted Successfully..");
-         }
-         else {
-             Session::flash('message',"Tourist not  Delet .");
-         }
-         return redirect()->to('tourist');
+                ];
+                Transaction::create($transaction);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Yay! Tourist account has been successfully removed!',
+                ]);
+            }
+            else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'error! Tourist account not removed!',
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+
+            ]);
+        }
+
     }
 }

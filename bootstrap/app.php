@@ -40,7 +40,14 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+// Uncomment this line
+// $app->register(App\Providers\AuthServiceProvider::class);
 
+// // Add this line
+// $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+// $app->routeMiddleware([
+//     'auth' => App\Http\Middleware\Authenticate::class,
+// ]);
 /*
 |--------------------------------------------------------------------------
 | Return The Application

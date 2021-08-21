@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use App\Models\Transaction;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,29 +13,64 @@ class ReviewController extends Controller
 {
     public function index()
 {
-   // $this->data['mode']='edit';
-    $this->data['reviews']=Review::all();
-    return view('Tourist.review',$this->data);
+    $rev =Review::all();
+    try {
+       // $users = app('db')->table('users')->get();
+        return response()->json([
+            'success' => true,
+            'users'   => $rev
+        ], 200);
+    } catch (Exception $ex) {
+        return response()->json([
+            'success'=>false,
+            'message'=>$ex->getMessage(),
+        ]);
+     }
+    // $this->data['reviews']=
+    // return view('Tourist.review',$this->data);
 }
     public function edit($id)
     {
-       // $this->data['user']=Employee::findOrFail($id);
-    //    $this->data['user']= Tourist::findOrFail($id);
-        //$user->status=1;
-
-        Review:: where('id',$id)->update(['status'=>1]);
-        $transaction=[
-            'user_id'=>Auth::user()->id,
-            'user'=>Auth::user()->name,
-            'activity'=>' Tourist Review Approved ',
-            'description'=> '# '.$id.' Number Review approved by '.Auth::user()->name
+        try {
+            if (  Review:: where('id',$id)->update(['status'=>1])) {
+                $transaction=[
+                    'user_id'=>Auth::user()->id,
+                    'user'=>Auth::user()->name,
+                    'activity'=>' Tourist Review Approved ',
+                    'description'=> '# '.$id.' Number Review approved by '.Auth::user()->name
 
 
-        ];
-        Transaction::create($transaction);
+                ];
+                Transaction::create($transaction);
+
+             return response()->json([
+                 'success'=>true,
+                 'message'=> "Yes! Review acivate successfully"
+             ]);
+            }
+        else {
+         return response()->json([
+             'success'=>false,
+             'message'=> "Error! Review  Not  acivate"
+         ]);
+        }
 
 
-        return redirect()->to('review');
+     }catch(Exception $ex){
+         return response()->json([
+             'success'=>false,
+             'message'=>$ex->getMessage()
+
+         ]);
+
+     }
+
+
+
+
+
+
+        // return redirect()->to('review');
         // if ( $user->save()) {
         //     Session::flash('message',"Tourist Updated Successfully..");
         //  }

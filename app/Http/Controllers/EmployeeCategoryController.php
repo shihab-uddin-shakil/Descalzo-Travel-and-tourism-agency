@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee_Category;
 use App\Models\Transaction;
+use Dotenv\Exception\ValidationException;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeCategoryController extends Controller
 {
@@ -17,8 +20,22 @@ class EmployeeCategoryController extends Controller
      */
     public function index()
     {
-        $this->data['ecategories']=Employee_Category::all();
-        return view('EmployeeGroup.group',$this->data);
+        $employee_category=Employee_Category::all();
+        try{
+            return response()->json([
+                'success'=>true,
+                'employee_category'=>$employee_category
+            ]);
+
+        }catch(Exception $ex){
+            return response()->json([
+                'success'=>false,
+                'message'=>$ex->getMessage()
+
+            ]);
+
+        }
+
     }
 
     /**
@@ -39,7 +56,24 @@ class EmployeeCategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator=Validator::make($request->all(),[
+            "title"=>'required|min:4'
+        ]);
+
+  if ($validator->fails()) {
+    return response()->json([
+        'success'=>false,
+        'message'=>$validator->errors()->all()
+    ]);
+  }
+  else {
+    try {
+        $this->validate($request,[
+            "title"=>'required|min:4'
+        ]);
         $titleData=$request->all();
+
         if (  Employee_Category::create($titleData)) {
             $transaction=[
                 'user_id'=>Auth::user()->id,
@@ -50,14 +84,31 @@ class EmployeeCategoryController extends Controller
 
             ];
             Transaction::create($transaction);
-
-           Session::flash('message',"Emloyee Category Created Successfully..");
+            return response()->json([
+                'success'=>true,
+                'message'=>'Employe category Successfully created',
+                'employee_category'=>$titleData
+            ]);
         }
         else {
-            Session::flash('message',"Emloyee Category   not Created .");
-
+            return response()->json([
+                'success'=>false,
+                'message'=>"employe category not created"
+            ]);
         }
-        return redirect()->to('employee_categories');
+
+        } catch (ValidationException $th) {
+            //throw $th;
+            return response()->json([
+                'success'=>false,
+                'message'=>$th->getMessage()
+            ]);
+        }
+
+
+  }
+
+
     }
 
     /**
@@ -102,22 +153,25 @@ class EmployeeCategoryController extends Controller
      */
     public function destroy($id)
     {
-        if (Employee_Category::find($id)->delete()) {
+        try {
+            Employee_Category::find($id)->delete();
             $transaction=[
                 'user_id'=>Auth::user()->id,
                 'user'=>Auth::user()->name,
                 'activity'=>'Employee category deleted',
                 'description'=> ' category deleted by '.Auth::user()->name
-
-
             ];
             Transaction::create($transaction);
-            Session::flash('message',"Emloyee Category  Deleted Successfully..");
-         }
-         else {
-             Session::flash('message',"Emloyee Category  not Deleted .");
-         }
-
-         return redirect()->to('employee_categories');
+            return response()->json([
+                'success' => true,
+                'message' => 'Yay! Employee  Category has been successfully removed!',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Oops! Unable to delete this Employee Category.',
+                'error'=>$e->getMessage()
+            ]);
+        }
     }
 }

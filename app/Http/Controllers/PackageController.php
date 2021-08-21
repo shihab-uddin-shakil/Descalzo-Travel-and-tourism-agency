@@ -4,16 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Pakage;
 use App\Models\Transaction;
+use Dotenv\Exception\ValidationException;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class PackageController extends Controller
 {
     public function index()
     {
-        $this->data['packeges']=Pakage::all();
-        return view('Tourist.plist',$this->data);
+        $pakg=Pakage::all();
+        try{
+            return response()->json([
+                'success'=>true,
+                'package'=>$pakg
+            ]);
+
+        }catch(Exception $ex){
+            return response()->json([
+                'success'=>false,
+                'message'=>$ex->getMessage()
+
+            ]);
+
+        }
+
     }
 
     /**
@@ -34,8 +51,23 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        $titleData=$request->all();
-        if (  Pakage::create($titleData)) {
+        $validator=Validator::make($request->all(),[
+            "title"=>'required|min:3'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success'=>false,
+                'message'=>$validator->errors()->all()
+            ]);
+          }
+          else {
+            try {
+                $this->validate($request,[
+                    "title"=>'required|min:4'
+                ]);
+                $titleData=$request->all();
+        if (Pakage::create($titleData)) {
             $transaction=[
                 'user_id'=>Auth::user()->id,
                 'user'=>Auth::user()->name,
@@ -45,15 +77,31 @@ class PackageController extends Controller
 
             ];
             Transaction::create($transaction);
-
-
-           Session::flash('message',"Pacakage Created Successfully..");
+            return response()->json([
+                'success'=>true,
+                'message'=>'Pacakage Successfully created',
+                'package'=>$titleData
+            ]);
         }
         else {
-            Session::flash('message',"Pacakage   not Created .");
-
+            return response()->json([
+                'success'=>false,
+                'message'=>"Pacakage not created"
+            ]);
         }
-        return redirect()->to('packeges');
+
+        } catch (ValidationException $th) {
+            //throw $th;
+            return response()->json([
+                'success'=>false,
+                'message'=>$th->getMessage()
+            ]);
+        }
+
+
+  }
+
+
     }
 
     /**
@@ -98,22 +146,36 @@ class PackageController extends Controller
      */
     public function destroy($id)
     {
-        if (Pakage::find($id)->delete()) {
-            $transaction=[
-                'user_id'=>Auth::user()->id,
-                'user'=>Auth::user()->name,
-                'activity'=>'Pacakage  deleted',
-                'description'=> ' Pacakage  deleted by '.Auth::user()->name
+        try {
+            if (Pakage::find($id)->delete()) {
+                $transaction=[
+                    'user_id'=>Auth::user()->id,
+                    'user'=>Auth::user()->name,
+                    'activity'=>'Pacakage  deleted',
+                    'description'=> ' Pacakage  deleted by '.Auth::user()->name
 
 
-            ];
-            Transaction::create($transaction);
-            Session::flash('message',"Pacakage   Deleted Successfully..");
-         }
-         else {
-             Session::flash('message',"Pacakage  not Deleted .");
-         }
+                ];
+                Transaction::create($transaction);
 
-         return redirect()->to('packeges');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Yay! Pacakage has been successfully removed!',
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Error! Pacakage Not removed!',
+            ]);
+        }
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Oops! Unable to delete this Employee Category.',
+                'error'=>$e->getMessage()
+            ]);
+        }
     }
 }
